@@ -1,4 +1,4 @@
-import { connectMongoDB } from "../../database/mongodb";
+import { connectMongoDB } from "../../db/mongodb";
 import User from "../../models/user";
 import { NextResponse } from "next/server";
 

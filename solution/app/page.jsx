@@ -6,13 +6,13 @@ import { authOptions } from "./api/auth/[...nextauth]/route"
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
-  if (session) redirect("/dashboard");
+  if (session) redirect("/pages/dashboard");
 
   return (
     <>
     <div className='flex flex-col'>
-      <Link href='/login'>Login</Link>
-      <Link href='/register'>Register</Link>
+      <Link href='/pages/login'>Login</Link>
+      <Link href='/pages/register'>Register</Link>
     </div>
     </>
   );

@@ -27,7 +27,7 @@ export default function UserInfo() {
     </div>
     ) :
     (
-      <h1><Link href='/register'><b>Register</b></Link> or <Link href='/login'><b>Sign In</b></Link></h1>
+      <h1><Link href='/pages/register'><b>Register</b></Link> or <Link href='/pages/login'><b>Sign In</b></Link></h1>
     )
   );
 }
