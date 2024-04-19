@@ -1,19 +1,23 @@
-import Link from 'next/link'
-import { getServerSession } from "next-auth"
-import { redirect } from "next/navigation"
-import { authOptions } from "./api/auth/[...nextauth]/route"
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import { authOptions } from './api/auth/[...nextauth]/route'
+import HeaderGuest from './components/HeaderGuest'
+import HomePage from './components/HomePage'
+import CurrentGames from './components/CurrentGames'
+import Footer from './components/Footer'
 
-export default async function Home() {
+export default async function Index() {
   const session = await getServerSession(authOptions);
-
   if (session) redirect("/pages/dashboard");
 
   return (
     <>
-    <div className='flex flex-col'>
-      <Link href='/pages/login'>Login</Link>
-      <Link href='/pages/register'>Register</Link>
-    </div>
+      <div className='h-screen bg-black'>
+        <HeaderGuest />
+        <HomePage />
+        <CurrentGames />
+        <Footer />
+      </div>
     </>
   );
 }
