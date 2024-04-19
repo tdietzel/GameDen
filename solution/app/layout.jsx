@@ -1,5 +1,5 @@
-import { AuthProvider } from "./Providers";
-import "./globals.css";
+import { AuthProvider } from './Providers'
+import './globals.css'
 
 export const metadata = {
   title: "Game Den Retreat",

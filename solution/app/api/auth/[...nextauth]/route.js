@@ -1,13 +1,13 @@
-import { connectMongoDB } from "../../../db/mongodb";
-import User from "../../../models/user";
-import NextAuth from "next-auth/next";
-import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
+import { connectMongoDB } from '../../../db/mongodb'
+import User from '../../../models/user'
+import NextAuth from 'next-auth/next'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import bcrypt from 'bcryptjs'
 
 export const authOptions = {
   providers: [
     CredentialsProvider({
-      name: "credentials",
+      name: 'credentials',
       credentials: {},
 
       async authorize(credentials) {
