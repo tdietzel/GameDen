@@ -1,5 +1,5 @@
-'use client'
-import React, { useState } from 'react'
+// Header.jsx
+import React, { useState, useEffect } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import diceIMG from '../public/img/dice.png'
 import characterIMG from '../public/img/character.png'
@@ -7,11 +7,23 @@ import coinIMG from '../public/img/dollar.png'
 import Link from 'next/link'
 
 export default function Header() {
-  const [showUserInfo, setShowUserInfo] = useState(false);
-  const { data: session } = useSession();
+  const [showUserInfo, setShowUserInfo] = useState(false)
+  const { data: session } = useSession()
+  const [userData, setUserData] = useState({ coins: 0, email: '' })
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (session) {
+        const res = await fetch('/api/user')
+        const data = await res.json()
+        setUserData(data)
+      }
+    }
+    fetchUserData()
+  }, [session])
 
   function handleProfileDropdown() {
-    setShowUserInfo(!showUserInfo);
+    setShowUserInfo(!showUserInfo)
   }
 
   return (
@@ -33,10 +45,10 @@ export default function Header() {
 
         {/* User Info */}
         <div className="flex items-center mr-5">
-          <h1 className="text-center">Timmy</h1>
+          <h1 className="text-center">{userData.email}</h1>
           <div className="border-2 rounded-lg p-3 pr-9 flex items-center">
-            <p>100,000,000</p>
-            <img src={ coinIMG.src } alt='coin' className="w-5 h-5 ml-1" />
+            <p>{ userData.coins }</p>
+            <img src={ coinIMG.src } alt="coin" className="w-5 h-5 ml-1" />
           </div>
         </div>
         <img onClick={handleProfileDropdown} src={ characterIMG.src } alt='profile-picture' className="cursor-pointer"/>
