@@ -1,5 +1,7 @@
 import mongoose, { Schema, models } from 'mongoose'
 
+mongoose.models = {}
+
 const userSchema = new Schema(
   {
     screenName: {
@@ -17,10 +19,18 @@ const userSchema = new Schema(
     coins: {
       type: Number,
       default: 100,
+    },
+    level: {
+      type: Number,
+      default: 1,
+    },
+    exp: {
+      type: Number,
+      default: 1,
     }
   },
   { timestamps: true }
 );
 
-const User = models.User || mongoose.model('User', userSchema);
-export default User;
+const UserModel = models.UserModel || mongoose.model('UserModel', userSchema);
+export default UserModel;
