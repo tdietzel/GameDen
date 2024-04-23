@@ -1,9 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import achievementIMG from '../public/img/achievement.png'
 
 export default function ChatBarDashboard() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const { data: session } = useSession()
+  const [userData, setUserData] = useState({ name: '' })
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (session) {
+        const res = await fetch('/api/user')
+        const data = await res.json()
+        setUserData(data)
+      }
+    }
+    fetchUserData()
+  }, [session])
 
   const handleMessageChange = (e) => {
     setNewMessage(e.target.value);
@@ -28,8 +42,8 @@ export default function ChatBarDashboard() {
         <div className="flex flex-row h-2/3">
           {/* Dashboard */}
           <div className="w-1/2 h-full p-4 bg-blue-400">
-            <h1 className="text-3xl text-white mb-4">Welcome back, Timmy</h1>
-            <h1 className="text-3xl text-center mb-4 font-bold">Level 1</h1>
+            <h1 className="text-3xl text-white mb-4">Welcome back, { userData.name }</h1>
+            <h1 className="text-3xl text-center mb-4 font-bold">Level { userData.level }</h1>
             <div className="w-300px mx-auto mb-20">
               <h2 className="font-bold text-lg">Progress: 39%</h2>
               <div className="w-full h-20 bg-white overflow-hidden rounded-lg">
