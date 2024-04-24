@@ -12,7 +12,6 @@ export async function POST(req) {
       screenName,
       email,
       password: hashedPassword,
-      coins: 10000,
     });
 
     return NextResponse.json({ message: "User registered." }, { status: 201 });

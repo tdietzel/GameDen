@@ -1,23 +1,35 @@
-import React, { useState, useEffect } from 'react'
-import { useSession } from 'next-auth/react'
-import achievementIMG from '../public/img/achievement.png'
+import React, { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import achievementIMG from '../public/img/achievement.png';
+
+const achievementsData = [
+  { id: 1, name: 'First Win', description: 'Win your first game', image: achievementIMG, condition: (wins) => wins >= 1 },
+  { id: 2, name: 'High Roller', description: 'Reach 1000 coins', image: achievementIMG, condition: (maxCoins) => maxCoins >= 10000 },
+];
 
 export default function ChatBarDashboard() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const { data: session } = useSession()
-  const [userData, setUserData] = useState({ name: '' })
+  const { data: session } = useSession();
+  const [userData, setUserData] = useState({});
+  const [achievements, setAchievements] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
       if (session) {
-        const res = await fetch('/api/user')
-        const data = await res.json()
-        setUserData(data)
+        const res = await fetch('/api/user');
+        const data = await res.json();
+        setUserData(data);
+        console.log('achievementsData', achievementsData)
+        const updatedAchievements = achievementsData.filter((achievement) =>
+          achievement.condition(data.wins, data.maxCoins)
+        );
+        setAchievements(updatedAchievements);
+        console.log('achievements', achievements)
       }
-    }
-    fetchUserData()
-  }, [session])
+    };
+    fetchUserData();
+  }, [session]);
 
   const handleMessageChange = (e) => {
     setNewMessage(e.target.value);
@@ -34,6 +46,14 @@ export default function ChatBarDashboard() {
     }
   };
 
+  const calculateProgress = () => {
+    const { exp, expToNextLevel } = userData;
+    if (expToNextLevel === 0) {
+      return 100;
+    }
+    return (exp / expToNextLevel) * 100;
+  };
+
   return (
     <>
       {/* Dashboard, Chat Feed & User Stats/Achievements */}
@@ -45,11 +65,11 @@ export default function ChatBarDashboard() {
             <h1 className="text-3xl text-white mb-4">Welcome back, { userData.name }</h1>
             <h1 className="text-3xl text-center mb-4 font-bold">Level { userData.level }</h1>
             <div className="w-300px mx-auto mb-20">
-              <h2 className="font-bold text-lg">Progress: 39%</h2>
+              <h2 className="font-bold text-lg">Progress: {calculateProgress()}%</h2>
               <div className="w-full h-20 bg-white overflow-hidden rounded-lg">
                 <div
                   className="h-full bg-red-500 transition-width duration-300 ease-in-out border-2 border-black"
-                  style={{ width: '39%' }}
+                  style={{ width: `${calculateProgress()}%` }}
                 />
               </div>
             </div>
@@ -64,16 +84,18 @@ export default function ChatBarDashboard() {
               {messages.map((message, index) => (
                 <div key={ index } className="mb-4 bg-slate-500 p-2 rounded-md">
                   <span className="text-gray-400">{ message.timestamp }</span>
-                  <p className="text-white">{ message.text }</p>
+                  <p className="text-white">
+                    <span className="text-blue-900 font-bold">{ userData.name }:</span> {message.text}
+                  </p>
                 </div>
               ))}
             </div>
             <div className="mt-4">
               <input
-                type='text'
+                type="text"
                 value={ newMessage }
                 onChange={handleMessageChange}
-                placeholder='Type your message...'
+                placeholder="Type your message..."
                 className="w-full p-2 border rounded text-black"
               />
               <button onClick={handleSendMessage} className="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded">
@@ -84,25 +106,35 @@ export default function ChatBarDashboard() {
         </div>
 
         {/* User Stats/Achievements */}
-        <div className="w-full bg-black h-1/3 pt-8 rounded-lg flex flex-col">
+        <div className="w-full bg-black h-1/3 pt-10 rounded-lg flex flex-col">
           <div className="flex flex-row justify-center">
             <div className="h-12 rounded-lg flex flex-col w-1/5 justify-center place-items-center">
-              <h1 className="bg-blue-800 text-white text-start font-bold text-3xl mt-24 p-2">Stats</h1>
+              <h1 className="bg-blue-800 text-white text-start font-bold text-3xl mt-40 p-2">Stats</h1>
               <div className="flex flex-col mt-5 text-white text-lg border-2 border-white p-3">
-                <h1>Wins: 1000</h1>
-                <h1>W/L: 3.5</h1>
-                <h1>Most Coins: 100,000,000</h1>
-                <h1>Games Played: 1,285</h1>
+                <h1 className="text-center font-bold text-3xl">Overall</h1>
+                <h1>Wins: { userData.wins }</h1>
+                <h1>Loses: { userData.loses }</h1>
+                <h1>W/L: { userData.wl !== undefined ? parseFloat(userData.wl).toFixed(1) : 'N/A' }</h1>
+                <h1>Most Coins: { userData.maxCoins }</h1>
+                <h1>Games Played: { userData.totalGamesPlayed }</h1>
               </div>
             </div>
-            <div className="h-12 rounded-lg flex flex-col w-4/5 justify-center place-items-center pr-72">
+            <div className="h-12 rounded-lg flex flex-col w-4/5 justify-center place-items-center pr-72 pt-12">
               <h1 className="bg-blue-800 text-white text-center font-bold text-3xl mt-6 p-2">Achievement Showcase</h1>
               <div className="flex flex-row mt-5">
-                <img src={ achievementIMG.src } alt='achievement.png' className="h-16 w-16 mr-5" />
-                <img src={ achievementIMG.src } alt='achievement.png' className="h-16 w-16 mr-5" />
-                <img src={ achievementIMG.src } alt='achievement.png' className="h-16 w-16 mr-5" />
-                <img src={ achievementIMG.src } alt='achievement.png' className="h-16 w-16 mr-5" />
-                <img src={ achievementIMG.src } alt='achievement.png' className="h-16 w-16 mr-5" />
+                <div className="flex flex-row mt-5">
+                  {achievements.length === 0 ? (
+                    <h1 className='text-white'>No Achievements</h1>
+                  ) : (
+                    achievements.map((achievement) => (
+                      <div key={ achievement.id } className="flex flex-col items-center mr-4">
+                        <img src={ achievement.image.src } alt={achievement.name} className="h-16 w-16" />
+                        <span className="text-white text-center">{achievement.name}</span>
+                        <span className="text-gray-400 text-center">{achievement.description}</span>
+                      </div>
+                    ))
+                  )}
+                </div>
               </div>
             </div>
           </div>
