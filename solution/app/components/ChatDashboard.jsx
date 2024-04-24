@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import achievementIMG from '../public/img/achievement.png';
+import React, { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
+import champIMG from '../public/img/trophey.png'
+import firstWinIMG from '../public/img/flag.png'
+import evenStevenIMG from '../public/img/avatar.png'
+import highRollerIMG from '../public/img/high-roller.png'
 
 const achievementsData = [
-  { id: 1, name: 'First Win', description: 'Win your first game', image: achievementIMG, condition: (wins) => wins >= 1 },
-  { id: 2, name: 'High Roller', description: 'Reach 1000 coins', image: achievementIMG, condition: (maxCoins) => maxCoins >= 10000 },
+  { id: 1, name: 'First Win', description: 'Win your first game', image: firstWinIMG, condition: (wins) => wins >= 1 },
+  { id: 2, name: 'High Roller', description: 'Reach 10000 coins', image: highRollerIMG, condition: (maxCoins) => maxCoins >= 10000 },
+  { id: 3, name: 'Champ', description: 'Reached above 3.0 W/L', image: champIMG, condition: (wl) => wl >= 3 },
+  { id: 4, name: 'Even Steven', description: 'Achieve a 1:1 win/loss ratio.', image: evenStevenIMG, condition: (wl) => (wl >= 1 && wl < 2)}
 ];
 
 export default function ChatBarDashboard() {
@@ -20,12 +25,23 @@ export default function ChatBarDashboard() {
         const res = await fetch('/api/user');
         const data = await res.json();
         setUserData(data);
-        console.log('achievementsData', achievementsData)
-        const updatedAchievements = achievementsData.filter((achievement) =>
-          achievement.condition(data.wins, data.maxCoins)
-        );
+        
+        const updatedAchievements = achievementsData.filter((achievement) => {
+          switch (achievement.name) {
+            case 'First Win':
+              return achievement.condition(data.wins);
+            case 'High Roller':
+              return achievement.condition(data.maxCoins);
+            case 'Champ':
+              return achievement.condition(data.wl);
+            case 'Even Steven':
+              return achievement.condition(data.wl);
+            default:
+              return false;
+          }
+        });
+
         setAchievements(updatedAchievements);
-        console.log('achievements', achievements)
       }
     };
     fetchUserData();
