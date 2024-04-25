@@ -44,6 +44,22 @@ const userSchema = new Schema(
       type: Schema.Types.Decimal128,
       default: 0.0,
     },
+    blackjackWins: {
+      type: Number,
+      default: 0,
+    },
+    rouletteWins: {
+      type: Number,
+      default: 0,
+    },
+    spadesWins: {
+      type: Number,
+      default: 0,
+    },
+    unoWins: {
+      type: Number,
+      default: 0,
+    },
     totalGamesPlayed: {
       type: Number,
       default: 0,
