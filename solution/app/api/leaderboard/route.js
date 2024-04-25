@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 export async function GET(request) {
     try {
         const { searchParams } = new URL(request.url);
-        const sortBy = searchParams.get('sortBy') || 'maxCoins';
+        const sortBy = searchParams.get('sortBy');
 
         await mongoose.connect(process.env.MONGODB_URI, {
             useNewUrlParser: true,
@@ -14,14 +14,14 @@ export async function GET(request) {
         const sortCriteria = {
             'maxCoins': { maxCoins: -1 },
             'wl': { wl: -1 },
-            'blackjack': { blackjackWins: -1 },
-            'roulette': { rouletteWins: -1 },
-            'spades': { spadesWins: -1 },
-            'uno': { unoWins: -1 },
+            'blackjackWins': { blackjackWins: -1 },
+            'rouletteWins': { rouletteWins: -1 },
+            'spadesWins': { spadesWins: -1 },
+            'unoWins': { unoWins: -1 },
         };
 
         const topUsers = await UserModel.find({})
-            .sort(sortCriteria[sortBy] || sortCriteria.maxCoins)
+            .sort(sortCriteria[sortBy])
             .limit(10)
         .exec();
 
