@@ -6,6 +6,10 @@ import gameIMG from '../public/img/game.png'
 import rouletteIMG from '../public/img/roulette.png'
 import spadeIMG from '../public/img/spade.png'
 import unoIMG from '../public/img/uno2.png'
+import goldIMG from '../public/img/medal.png'
+import silverIMG from '../public/img/medal2.png'
+import bronzeIMG from '../public/img/medal3.png'
+import characterIMG from '../public/img/character.png'
 
 export default function Leaderboard() {
   const [topUsers, setTopUsers] = useState([]);
@@ -34,72 +38,81 @@ export default function Leaderboard() {
   const handleFilterClick = (sortCriteria) => {
     setSortBy(sortCriteria);
   };
-
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-r from-blue-600 to-blue-800 text-white">
       {/* Heading & Navigation */}
-      <div className="h-screen bg-gray-700">
-        <h1 className="text-center text-6xl text-red-700 font-bold pt-11">Leaderboards</h1>
-        <div className="flex flex-wrap justify-center mt-8 text-white">
-          {/* Navigation Links */}
-          <Link href="#" onClick={() => handleFilterClick('maxCoins')} className="mr-5">Total Coins</Link>
-          <Link href="#" onClick={() => handleFilterClick('wl')} className="mr-5">W/L Record</Link>
-          <Link href="#" onClick={() => handleFilterClick('blackjack')} className="mr-5">Blackjack</Link>
-          <Link href="#" onClick={() => handleFilterClick('roulette')} className="mr-5">Roulette</Link>
-          <Link href="#" onClick={() => handleFilterClick('spades')} className="mr-5">Spades</Link>
-          <Link href="#" onClick={() => handleFilterClick('uno')} className="mr-5">Uno</Link>
-        </div>
-
-        {/* Leaderboard Container */}
-        <div className="bg-gray-900 w-4/5 mx-auto mt-8 p-4 rounded-lg shadow-lg">
-          {/* Leaderboard List */}
-          <ul>
-            {Array.isArray(topUsers) && topUsers.map((user, index) => (
-              <li key={ user._id } className="flex items-center justify-between py-2 border-b border-gray-800">
-                <span className="text-lg text-white">{ index + 1 }.</span>
-                <span className="text-lg text-white">{ user.screenName }</span>
-                <span className="text-lg text-yellow-300 flex flex-row justify-center items-center font-bold">
-                  {sortBy === 'wl' ?
-                    <>
-                      <p className='mr-5'>{user[sortBy].$numberDecimal}</p>
-                      <img src={ trophyIMG.src } alt='Record' className='h-16 w-16' />
-                    </>
-                    :
-                    sortBy === 'blackjack' ?
-                    <>
-                      <p className='mr-5'>{formatNumberWithCommas(user[sortBy] || user.blackjackWins)}</p>
-                      <img src={ gameIMG.src } alt='BlackJack' className='h-16 w-16' />
-                    </>
-                    :
-                    sortBy === 'roulette' ?
-                    <>
-                      <p className='mr-5'>{formatNumberWithCommas(user[sortBy] || user.rouletteWins)}</p>
-                      <img src={ rouletteIMG.src } alt='Roulette' className='h-16 w-16' />
-                    </>
-                    :
-                    sortBy === 'spades' ?
-                    <>
-                      <p className='mr-5'>{formatNumberWithCommas(user[sortBy] || user.spadesWins)}</p>
-                      <img src={ spadeIMG.src } alt='Spades' className='h-16 w-16 padding-5 bg-white rounded-lg' />
-                    </>
-                    :
-                    sortBy === 'uno' ?
-                    <>
-                      <p className='mr-5'>{formatNumberWithCommas(user[sortBy] || user.unoWins)}</p>
-                      <img src={ unoIMG.src } alt='Uno' className='h-16 w-16' />
-                    </>
-                    :
-                    <>
-                      <p className='mr-5'>{formatNumberWithCommas(user[sortBy] || user.maxCoins)}</p>
-                      <img src={ coinIMG.src } alt='Coin' className='h-16 w-16' />
-                    </>
-                  }
-                </span>
-              </li>
-            ))}
-          </ul>
+      <div className="py-10 text-center">
+        <h1 className="text-4xl font-bold text-red-700">Leaderboards</h1>
+        <div className="flex justify-center mt-4 space-x-4">
+          <FilterLink onClick={() => handleFilterClick('maxCoins')}>Total Coins</FilterLink>
+          <FilterLink onClick={() => handleFilterClick('wl')}>W/L Record</FilterLink>
+          <FilterLink onClick={() => handleFilterClick('blackjackWins')}>Blackjack</FilterLink>
+          <FilterLink onClick={() => handleFilterClick('rouletteWins')}>Roulette</FilterLink>
+          <FilterLink onClick={() => handleFilterClick('spadesWins')}>Spades</FilterLink>
+          <FilterLink onClick={() => handleFilterClick('unoWins')}>Uno</FilterLink>
         </div>
       </div>
-    </>
+
+      {/* Leaderboard Container */}
+      <div className="w-4/5 mx-auto p-4 rounded-lg bg-gray-800 shadow-lg">
+        {/* Leaderboard List */}
+        <ul>
+          {topUsers.map((user, index) => (
+            <li key={user._id} className="flex items-center justify-between py-3 border-b border-gray-700 hover:bg-slate-600 cursor-pointer rounded-lg">
+              {index === 0 ? 
+                <img className="h-10 w-10" src={ goldIMG.src } />
+                  : index === 1 ?
+                <img className="h-10 w-10" src={ silverIMG.src } />
+                  : index === 2 ?
+                <img className="h-10 w-10" src={ bronzeIMG.src } />
+                  :
+                <span className="text-4xl font-semibold text-white ml-2 mr-2">{index + 1}</span>
+              }
+              <span className="text-lg font-semibold text-white">
+                <img className="h-10 w-10" src={ characterIMG.src } />
+                {user.screenName}
+              </span>
+              <span className="flex items-center">
+                {renderSortIcon(user)}
+                {sortBy === 'wl' ? (
+                  <p className="text-lg font-bold text-yellow-300 ml-3">{user[sortBy].$numberDecimal}</p>
+                ) : (
+                  <p className="text-lg font-bold text-yellow-300 ml-3 mr-2">{formatUserValue(user)}</p>
+                )}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
+
+  function FilterLink({ children, onClick }) {
+    return (
+      <Link href="#" onClick={onClick} className="text-lg hover:text-red-700 cursor-pointer">
+        {children}
+      </Link>
+    );
+  }
+
+  function renderSortIcon() {
+    if (sortBy === 'wl') {
+      return <img src={ trophyIMG.src } alt="Record" className="h-10 w-10" />;
+    } else if (sortBy === 'blackjackWins') {
+      return <img src={ gameIMG.src } alt="BlackJack" className="h-10 w-10" />;
+    } else if (sortBy === 'rouletteWins') {
+      return <img src={ rouletteIMG.src } alt="Roulette" className="h-10 w-10" />;
+    } else if (sortBy === 'spadesWins') {
+      return <img src={ spadeIMG.src } alt="Spades" className="h-10 w-10" />;
+    } else if (sortBy === 'unoWins') {
+      return <img src={ unoIMG.src } alt="Uno" className="h-10 w-10" />;
+    } else {
+      return <img src={coinIMG.src} alt="Coin" className="h-10 w-10" />;
+    }
+  }
+
+  function formatUserValue(user) {
+    const value = user[sortBy];
+    return formatNumberWithCommas(value);
+  }
 }

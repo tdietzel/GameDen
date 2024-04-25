@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import Header from '../../components/Header'
 import ChatDashboard from '../../components/ChatDashboard'
+import Footer from '../../components/Footer'
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
@@ -21,6 +22,7 @@ export default function Dashboard() {
     <>
       <Header />
       <ChatDashboard />
+      <Footer />
     </>
   );
 }

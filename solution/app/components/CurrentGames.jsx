@@ -1,35 +1,40 @@
-import React from 'react'
+import React from 'react';
+import blackjackIMG from '../public/img/game.png';
+import unoIMG from '../public/img/uno.png';
+import spadesIMG from '../public/img/spades.png';
+import rouletteIMG from '../public/img/roulette.png';
+import comingSoonIMG from '../public/img/coming-soon.png';
 
-export default function CurrentGames() {
+const CurrentGames = () => {
   return (
-    <>
-      {/* Heading, Games & Announcements */}
-      <div className="h-1/3 text-white text-center mt-10">
-        {/* Heading */}
-        <h1 className="display-flex text-center text-4xl text-red-700 font-bold pt-11">Current Games</h1>
+    <div className="text-center text-white pt-44">
+      {/* Heading */}
+      <h1 className="text-4xl font-bold text-red-700 mb-8">Current Games</h1>
 
-        {/* Games */}
-        <div className="w-screen flex flex-row place-content-center mt-5">
-          <div className="bg-red-700 h-40 w-40 mr-5 flex justify-center items-center">
-            <p className="text-center">Blackjack</p>
-          </div>
-          <div className="bg-green-600 h-40 w-40 mr-5 flex justify-center items-center">
-            <p className="text-center">Roulette</p>
-          </div>
-          <div className="bg-white h-40 w-40 mr-5 flex justify-center items-center">
-            <p className="text-center text-black">Uno</p>
-          </div>
-          <div className="bg-blue-800 h-40 w-40 mr-5 flex justify-center items-center">
-            <p className="text-center">Spades</p>
-          </div>
-          <div className="bg-gray-900 h-40 w-40 mr-5 flex justify-center items-center">
-            <p className="text-center">Coming soon.</p>
-          </div>
-        </div>
-        
-        {/* Announcements */}
-        <h1 className="text-white text-center pt-11 text-xl"><span className="text-green-700">NEW GAMES</span> EVERY MONTH!</h1>
+      {/* Game Cards */}
+      <div className="flex justify-center flex-wrap gap-6">
+        <GameCard bgClass="bg-red-700" imgSrc={blackjackIMG.src} altText="Blackjack" gameName="Blackjack" />
+        <GameCard bgClass="bg-green-600" imgSrc={rouletteIMG.src} altText="Roulette" gameName="Roulette" />
+        <GameCard bgClass="bg-white text-black" imgSrc={unoIMG.src} altText="Uno" gameName="Uno" />
+        <GameCard bgClass="bg-blue-900" imgSrc={spadesIMG.src} altText="Spades" gameName="Spades" />
+        <GameCard bgClass="bg-gray-900" imgSrc={comingSoonIMG.src} altText="Coming Soon" gameName="Coming soon" />
       </div>
-    </>
+      
+      {/* Announcements */}
+      <h2 className="text-xl text-white mt-12">
+        <span className="text-green-700">NEW GAMES</span> EVERY MONTH!
+      </h2>
+    </div>
   );
-}
+};
+
+const GameCard = ({ bgClass, imgSrc, altText, gameName }) => {
+  return (
+    <div className={`flex flex-col justify-center items-center h-52 w-52 ${bgClass} rounded-lg p-4`}>
+      <img src={imgSrc} alt={altText} className="h-24 w-24 mb-3" />
+      <p className="text-center font-bold">{gameName}</p>
+    </div>
+  );
+};
+
+export default CurrentGames;
