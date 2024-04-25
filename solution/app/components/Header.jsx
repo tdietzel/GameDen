@@ -1,4 +1,3 @@
-// Header.jsx
 import React, { useState, useEffect } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import diceIMG from '../public/img/dice.png'
@@ -26,6 +25,14 @@ export default function Header() {
     setShowUserInfo(!showUserInfo)
   }
 
+  const formatNumberWithCommas = (number) => {
+    if (number === undefined || number === null || isNaN(number)) {
+      return 'N/A';
+    }
+    
+    return number.toLocaleString();
+  };
+
   return (
     <>
       {/* GameDen Logo, Navigation & User Info */}
@@ -45,9 +52,9 @@ export default function Header() {
 
         {/* User Info */}
         <div className="flex items-center mr-5">
-          <h1 className="text-center">{userData.email}</h1>
+          <h1 className="text-center mr-5">{ userData.email }</h1>
           <div className="border-2 rounded-lg p-3 pr-9 flex items-center">
-            <p>{ userData.coins }</p>
+            <p>{formatNumberWithCommas(userData.coins)}</p>
             <img src={ coinIMG.src } alt="coin" className="w-5 h-5 ml-1" />
           </div>
         </div>
