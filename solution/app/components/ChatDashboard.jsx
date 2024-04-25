@@ -7,9 +7,9 @@ import highRollerIMG from '../public/img/high-roller.png'
 
 const achievementsData = [
   { id: 1, name: 'First Win', description: 'Win your first game', image: firstWinIMG, condition: (wins) => wins >= 1 },
-  { id: 2, name: 'High Roller', description: 'Reach 10000 coins', image: highRollerIMG, condition: (maxCoins) => maxCoins >= 10000 },
+  { id: 2, name: 'High Roller', description: 'Reach 10,000 coins', image: highRollerIMG, condition: (maxCoins) => maxCoins >= 10000 },
   { id: 3, name: 'Champ', description: 'Reached above 3.0 W/L', image: champIMG, condition: (wl) => wl >= 3 },
-  { id: 4, name: 'Even Steven', description: 'Achieve a 1:1 win/loss ratio.', image: evenStevenIMG, condition: (wl) => (wl >= 1 && wl < 2)}
+  { id: 4, name: 'Even Steven', description: 'Achieve a 1:1 W/L', image: evenStevenIMG, condition: (wl) => (wl >= 1 && wl < 2)}
 ];
 
 export default function ChatBarDashboard() {
@@ -70,6 +70,14 @@ export default function ChatBarDashboard() {
     return (exp / expToNextLevel) * 100;
   };
 
+  const formatNumberWithCommas = (number) => {
+    if (number === undefined || number === null || isNaN(number)) {
+      return 'N/A';
+    }
+    
+    return number.toLocaleString();
+  };
+
   return (
     <>
       {/* Dashboard, Chat Feed & User Stats/Achievements */}
@@ -101,7 +109,7 @@ export default function ChatBarDashboard() {
                 <div key={ index } className="mb-4 bg-slate-500 p-2 rounded-md">
                   <span className="text-gray-400">{ message.timestamp }</span>
                   <p className="text-white">
-                    <span className="text-blue-900 font-bold">{ userData.name }:</span> {message.text}
+                    <span className="text-blue-900 font-bold">{ userData.name }:</span> { message.text }
                   </p>
                 </div>
               ))}
@@ -131,7 +139,7 @@ export default function ChatBarDashboard() {
                 <h1>Wins: { userData.wins }</h1>
                 <h1>Loses: { userData.loses }</h1>
                 <h1>W/L: { userData.wl !== undefined ? parseFloat(userData.wl).toFixed(1) : 'N/A' }</h1>
-                <h1>Most Coins: { userData.maxCoins }</h1>
+                <h1>Most Coins: {formatNumberWithCommas(userData.maxCoins)}</h1>
                 <h1>Games Played: { userData.totalGamesPlayed }</h1>
               </div>
             </div>
@@ -144,9 +152,9 @@ export default function ChatBarDashboard() {
                   ) : (
                     achievements.map((achievement) => (
                       <div key={ achievement.id } className="flex flex-col items-center mr-4">
-                        <img src={ achievement.image.src } alt={achievement.name} className="h-16 w-16" />
-                        <span className="text-white text-center">{achievement.name}</span>
-                        <span className="text-gray-400 text-center">{achievement.description}</span>
+                        <img src={ achievement.image.src } alt={ achievement.name } className="h-16 w-16" />
+                        <span className="text-white text-center">{ achievement.name }</span>
+                        <span className="text-gray-400 text-center">{ achievement.description }</span>
                       </div>
                     ))
                   )}
