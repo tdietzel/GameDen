@@ -12,24 +12,24 @@ export default function Games() {
 
   return (
     <>
-      {session ? (
-        <>
-        <div className="bg-gray-200">
-          <Header />
-          <SoloGames />
-          <hr className="border-solid border-black" />
-          <MultiplayerGames />
-          <Footer />
-        </div>
-        </>
-      ) : (
-        <>
-          <HeaderGuest />
-          <SoloGames />
-          <MultiplayerGames />
-          <Footer />
-        </>
-      )}
+      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+        {session ? (
+          <>
+            <Header />
+            <SoloGames />
+            <hr className="border-solid border-black" />
+            <MultiplayerGames />
+            <Footer />
+          </>
+        ) : (
+          <>
+            <HeaderGuest />
+            <SoloGames />
+            <MultiplayerGames />
+            <Footer />
+          </>
+        )}
+      </div>
     </>
   );
 }

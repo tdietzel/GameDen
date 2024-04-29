@@ -150,7 +150,7 @@ export default function ChatBarDashboard() {
     if (expToNextLevel === 0) {
       return 100;
     }
-    return (exp / expToNextLevel) * 100;
+    return Math.round((exp / expToNextLevel) * 100);
   };
 
   const formatNumberWithCommas = (number) => {

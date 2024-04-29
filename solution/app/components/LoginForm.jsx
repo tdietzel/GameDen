@@ -34,21 +34,32 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="grid place-items-center h-screen">
-        <div className="shadow-lg p-5 rounded-lg border-t-4 border-green-400">
-          <h1 className="text-xl font-bold my-4">Login</h1>
-
+      <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
+        <h1 className="text-3xl font-bold mb-8 font-header">Login</h1>
+        <div className="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-lg">
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-            <input
-              onChange={(e) => setEmail(e.target.value)}
-              type="text"
-              placeholder="Email"
-            />
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              placeholder="Password"
-            />
+            <div className="mb-2">
+              <label htmlFor="email" className="block font-bold mb-2 font-body">
+                Email
+              </label>
+                <input
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="text"
+                  placeholder="Email"
+                  className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+            </div>
+            <div className="mb-2">
+              <label htmlFor="username" className="block font-bold mb-2 font-body">
+                Password
+              </label>
+              <input
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                placeholder="Password"
+                className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
             <button className="bg-green-600 text-white font-bold cursor-pointer px-6 py-2">
               Login
             </button>
@@ -57,6 +68,10 @@ export default function LoginForm() {
                 {error}
               </div>
             )}
+
+            <button type="button" onClick={() => signIn('google')}>
+              Login with Google
+            </button>
 
             <Link className="text-sm mt-3 text-right" href={"/pages/register"}>
               Don't have an account? <span className="underline">Register</span>

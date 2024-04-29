@@ -63,7 +63,7 @@ export default function MultiplayerGames() {
           <h1 className="text-5xl font-bold mb-6">Solo</h1>
 
           {/* Games */}
-          <div className="flex justify-center">
+          <div className="flex justify-center text-center">
             <div className="m-4 h-48 w-48 bg-black relative">
               <img src={ blackjackIMG.src } className="w-full h-full object-cover" />
               <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 hover:cursor-pointer">
