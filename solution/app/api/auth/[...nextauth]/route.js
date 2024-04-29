@@ -2,6 +2,7 @@ import { connectMongoDB } from '../../../db/mongodb'
 import User from '../../../models/user'
 import NextAuth from 'next-auth/next'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from "next-auth/providers/google"
 import bcrypt from 'bcryptjs'
 
 export const authOptions = {
@@ -33,7 +34,35 @@ export const authOptions = {
         }
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
+    }),
   ],
+  callbacks: {
+    async signIn({ user, profile }) {
+
+      const existingUser = await User.findOne({ email: user.email });
+
+      if (!existingUser) {
+        const newUser = new User({
+          screenName: profile.name,
+          email: user.email,
+        });
+
+        await newUser.save();
+      }
+
+      return true;
+    },
+  },
   session: {
     strategy: "jwt",
   },
