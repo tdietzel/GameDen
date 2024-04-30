@@ -1,5 +1,5 @@
 {
-  "name": "solution",
+  "name": "game-den",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -17,7 +17,9 @@
     "next": "^14.2.1",
     "next-auth": "^4.24.7",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-modal": "^3.16.1",
+    "react-select": "^5.8.0"
   },
   "devDependencies": {
     "@types/node": "20.12.7",
