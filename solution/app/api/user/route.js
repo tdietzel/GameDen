@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth/next'
+import { NextResponse } from 'next/server'
 import { connectMongoDB } from '../../db/mongodb'
 import UserModel from '../../models/user'
-import { NextResponse } from 'next/server'
 
 const calculateExpToNextLevel = (level) => {
   return 100 * 2 ** (level - 1)
@@ -21,7 +21,7 @@ export const GET = async (req) => {
     const session = await getServerSession(req);
     if (!session) {
       return new NextResponse(
-        JSON.stringify({ message: 'Unauthorized' }),
+        JSON.stringify({ message: "Unauthorized" }),
         { status: 401, headers: { 'Content-Type': 'application/json' } }
       );
     }
@@ -54,13 +54,14 @@ export const GET = async (req) => {
         loses: user.loses,
         wl: wl,
         totalGamesPlayed: user.totalGamesPlayed,
+        group: user.group,
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
     console.error(error);
     return new NextResponse(
-      JSON.stringify({ message: 'Internal Server Error' }),
+      JSON.stringify({ message: "Internal Server Error" }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
@@ -71,7 +72,7 @@ export const PUT = async (req) => {
     const session = await getServerSession(req);
     if (!session) {
       return new NextResponse(
-        JSON.stringify({ message: 'Unauthorized' }),
+        JSON.stringify({ message: "Unauthorized" }),
         { status: 401, headers: { 'Content-Type': 'application/json' } }
       );
     }
@@ -125,13 +126,13 @@ export const PUT = async (req) => {
     await user.save();
 
     return new NextResponse(
-      JSON.stringify({ message: 'User stats updated' }),
+      JSON.stringify({ message: "User stats updated" }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
     console.error(error);
     return new NextResponse(
-      JSON.stringify({ message: 'Internal Server Error' }),
+      JSON.stringify({ message: "Internal Server Error" }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }

@@ -1,13 +1,13 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export default function RegisterForm() {
-  const [screenName, setScreenName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [screenName, setScreenName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const router = useRouter();
 
@@ -66,7 +66,7 @@ export default function RegisterForm() {
         <div className="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-lg">
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <div className="mb-2">
-              <label htmlFor="username" className="block font-bold mb-2 font-body">
+              <label htmlFor='username' className="block font-bold mb-2 font-body">
                 Username
               </label>
               <input
@@ -82,19 +82,19 @@ export default function RegisterForm() {
               </label>
               <input
                 onChange={(e) => setEmail(e.target.value)}
-                type="text"
-                placeholder="Email"
+                type='text'
+                placeholder='Email'
                 className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div className="mb-2">
-              <label htmlFor="password" className="block font-bold mb-2 font-body">
+              <label htmlFor='password' className="block font-bold mb-2 font-body">
                 Password
               </label>
               <input
                 onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                placeholder="Password"
+                type='password'
+                placeholder='Password'
                 className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>

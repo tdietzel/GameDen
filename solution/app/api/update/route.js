@@ -8,7 +8,7 @@ export async function POST(req) {
     const session = await getServerSession(authOptions);
 
     if (!session) {
-      return new Response('Unauthorized', { status: 401 });
+      return new Response("Unauthorized", { status: 401 });
     }
 
     await connectMongoDB();
@@ -22,7 +22,7 @@ export async function POST(req) {
     );
 
     if (!updatedUser) {
-      return new Response('User not found', { status: 404 });
+      return new Response("User not found", { status: 404 });
     }
 
     return new Response(JSON.stringify(updatedUser), {
@@ -32,7 +32,7 @@ export async function POST(req) {
       },
     });
   } catch (error) {
-    console.error('Error updating user:', error);
-    return new Response('Internal server error', { status: 500 });
+    console.error("Error updating user:", error);
+    return new Response("Internal server error", { status: 500 });
   }
 }

@@ -1,9 +1,9 @@
-import { connectMongoDB } from '../../../db/mongodb'
-import User from '../../../models/user'
-import NextAuth from 'next-auth/next'
+import bcrypt from 'bcryptjs'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from "next-auth/providers/google"
-import bcrypt from 'bcryptjs'
+import NextAuth from 'next-auth/next'
+import { connectMongoDB } from '../../../db/mongodb'
+import User from '../../../models/user'
 
 export const authOptions = {
   providers: [

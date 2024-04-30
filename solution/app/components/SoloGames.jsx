@@ -1,10 +1,9 @@
-// SoloGames.jsx
-import React from 'react';
-import { useSession } from 'next-auth/react';
-import blackjackIMG from '../public/img/blackjack.png';
-import rouletteIMG from '../public/img/roulette.png';
-import unoIMG from '../public/img/uno.png';
-import spadesIMG from '../public/img/spades.png';
+import React from 'react'
+import { useSession } from 'next-auth/react'
+import blackjackIMG from '../public/img/blackjack.png'
+import rouletteIMG from '../public/img/roulette.png'
+import spadesIMG from '../public/img/spades.png'
+import unoIMG from '../public/img/uno.png'
 
 export default function MultiplayerGames() {
   const { data: session } = useSession();
@@ -25,12 +24,11 @@ export default function MultiplayerGames() {
       if (res.ok) {
         console.log(`User stats updated for ${action}`);
       } else {
-        console.error('Failed to update user stats');
+        console.error("Failed to update user stats");
       }
 
-      // Fetch updated user data if needed
     } catch (error) {
-      console.error('Error updating user stats:', error);
+      console.error("Error updating user stats:", error);
     }
   };
 
@@ -56,13 +54,10 @@ export default function MultiplayerGames() {
 
   return (
     <>
-      {/* Solo Container & Games */}
       <div className="flex flex-col items-center justify-center h-1/3 mt-24 mb-32">
-        {/* Solo Container */}
         <div className="flex flex-col items-center">
           <h1 className="text-5xl font-bold mb-6">Solo</h1>
 
-          {/* Games */}
           <div className="flex justify-center text-center">
             <div className="m-4 h-48 w-48 bg-black relative">
               <img src={ blackjackIMG.src } className="w-full h-full object-cover" />

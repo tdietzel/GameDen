@@ -11,7 +11,6 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Banner & Button */}
       <div className="h-1/3 p-20 text-white text-center mb-20">
         <h1 className="display-flex text-center text-8xl text-red-700 font-bold pt-11">GET YOUR FREE</h1>
         <h1 className="display-flex text-center text-8xl text-red-700 font-bold">1000 COINS</h1>

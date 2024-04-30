@@ -1,11 +1,11 @@
 'use client'
 import React from 'react'
 import { useSession } from 'next-auth/react'
+import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 import HeaderGuest from '../../components/HeaderGuest'
-import SoloGames from '../../components/SoloGames'
 import MultiplayerGames from '../../components/MultiplayerGames'
-import Footer from '../../components/Footer'
+import SoloGames from '../../components/SoloGames'
 
 export default function Games() {
   const { data: session } = useSession();

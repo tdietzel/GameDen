@@ -1,9 +1,9 @@
-import UserModel from '../../models/user'
 import mongoose from 'mongoose'
+import UserModel from '../../models/user'
 
-export async function GET(request) {
+export async function GET(req) {
     try {
-        const { searchParams } = new URL(request.url);
+        const { searchParams } = new URL(req.url);
         const sortBy = searchParams.get('sortBy');
 
         await mongoose.connect(process.env.MONGODB_URI, {
@@ -34,8 +34,8 @@ export async function GET(request) {
             },
         });
     } catch (error) {
-        console.error('Error fetching top users:', error);
-        return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+        console.error("Error fetching top users:", error);
+        return new Response(JSON.stringify({ error: "Internal Server Error" }), {
             status: 500,
             headers: {
                 'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
+import { NextResponse } from 'next/server'
 import { connectMongoDB } from '../../db/mongodb'
 import User from '../../models/user'
-import { NextResponse } from 'next/server'
 
 export async function POST(req) {
   const { searchParams } = new URL(req.url);
@@ -13,7 +13,7 @@ export async function POST(req) {
 
     if (!email) {
       return NextResponse.json(
-        { error: 'Missing email in request body' },
+        { error: "Missing email in request body" },
         { status: 400 }
       );
     }
@@ -21,7 +21,7 @@ export async function POST(req) {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
     await User.findByIdAndDelete(user._id);
@@ -29,6 +29,6 @@ export async function POST(req) {
     return NextResponse.redirect(`${redirectUrl}?message=User deleted successfully`, 302);
   } catch (error) {
     console.error('Error deleting user:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
