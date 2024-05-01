@@ -46,6 +46,7 @@ export default function LoginForm() {
                   onChange={(e) => setEmail(e.target.value)}
                   type='text'
                   placeholder='Email'
+                  autoComplete='username'
                   className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
@@ -57,6 +58,7 @@ export default function LoginForm() {
                 onChange={(e) => setPassword(e.target.value)}
                 type='password'
                 placeholder='Password'
+                autoComplete='current-password'
                 className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
