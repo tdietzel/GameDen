@@ -1,6 +1,4 @@
-import mongoose, { Schema, models } from 'mongoose'
-
-mongoose.models = {}
+import mongoose, { Schema } from 'mongoose'
 
 const userSchema = new Schema(
   {
@@ -41,7 +39,7 @@ const userSchema = new Schema(
       default: 0,
     },
     wl: {
-      type: Schema.Types.Decimal128,
+      type: mongoose.Schema.Types.Decimal128,
       default: 0.0,
     },
     blackjackWins: {
@@ -67,10 +65,16 @@ const userSchema = new Schema(
     maxCoins: {
       type: Number,
       default: 10000,
-    }
+    },
+    group: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'GroupModel',
+      default: null,
+    },
   },
   { timestamps: true }
 );
 
-const UserModel = models.UserModel || mongoose.model('UserModel', userSchema);
+const UserModel = mongoose.models.UserModel || mongoose.model('UserModel', userSchema);
+
 export default UserModel;
