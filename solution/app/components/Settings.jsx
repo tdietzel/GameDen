@@ -1,12 +1,14 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { useSession, signOut } from 'next-auth/react'
 
 export default function Settings() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [userData, setUserData] = useState({});
   const [newUsername, setNewUsername] = useState('');
   const [newEmail, setNewEmail] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -20,6 +22,11 @@ export default function Settings() {
     };
     fetchUserData();
   }, [session]);
+
+  if (status === 'unauthenticated') {
+    router.push('/pages/login');
+    return null;
+  }
 
   const handleUsernameChange = (e) => {
     setNewUsername(e.target.value);
@@ -47,6 +54,13 @@ export default function Settings() {
         const updatedData = await res.json();
         setUserData(updatedData);
         alert("Changes saved successfully!");
+
+        if (newEmail !== userData.email) {
+          await signOut();
+          router.push('/pages/login');
+        } else {
+          router.push('/');
+        }
       } else {
         alert("Failed to save changes. Please try again.");
       }
