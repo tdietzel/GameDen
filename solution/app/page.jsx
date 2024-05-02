@@ -1,10 +1,9 @@
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import { authOptions } from './api/auth/[...nextauth]/route'
-import CurrentGames from './components/CurrentGames'
 import Footer from './components/Footer'
 import HeaderGuest from './components/HeaderGuest'
-import HomePage from './components/HomePage'
+import Home from './components/Home'
 
 export default async function Index() {
   const session = await getServerSession(authOptions);
@@ -14,8 +13,7 @@ export default async function Index() {
     <>
       <div className="h-screen bg-black">
         <HeaderGuest />
-        <HomePage />
-        <CurrentGames />
+        <Home />
         <Footer />
       </div>
     </>

@@ -3,21 +3,20 @@ import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import CreateGroupForm from '../../components/CreateGroupForm'
 import CurrentGroup from '../../components/CurrentGroup'
-import GroupHome from '../../components/GroupHome'
+import Groups from '../../components/Groups'
 import Header from '../../components/Header'
 import HeaderGuest from '../../components/HeaderGuest'
 
-export default function Groups() {
+export default function GroupsHome() {
   const { data: session } = useSession();
   const userEmail = session?.user?.email;
   const [userData, setUserData] = useState({});
-  // const [groupData, setGroupData] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
       if (userEmail) {
         try {
-          const response = await fetch(`/api/user/?email=${userEmail}`);
+          const response = await fetch(`/api/user/?email=${ userEmail }`);
           const data = await response.json();
           setUserData(data);
         } catch (error) {
@@ -29,7 +28,7 @@ export default function Groups() {
   }, [userEmail]);
 
   return (
-    <div className="bg-black h-screen">
+    <div className="bg-gray-800 h-screen">
       {session ? (
         <>
           <Header />
@@ -38,31 +37,16 @@ export default function Groups() {
           ) : (
             <>
               <CreateGroupForm userId={ userEmail } />
-              <GroupHome />
+              <Groups />
             </>
           )}
         </>
       ) : (
-        <HeaderGuest />
+        <>
+          <HeaderGuest />
+          <Groups />
+        </>
       )}
     </div>
   );
 }
-
-  // const fetchGroupData = async (groupId) => {
-  //   try {
-  //     console.log('Fetching group data for groupId:', groupId); // Verify the value of groupId
-  //     const response = await fetch(`/api/group/${groupId}`);
-  //     const data = await response.json();
-  //     console.log('Group data:', data);
-  //     setGroupData(data);
-  //   } catch (error) {
-  //     console.error('Error fetching group data:', error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (userData.group) {
-  //     fetchGroupData(userData.group); // Pass the actual groupId directly
-  //   }
-  // }, [userData.group]);

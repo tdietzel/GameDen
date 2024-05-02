@@ -11,19 +11,19 @@ export default function Leaderboards() {
 
   return (
     <>
-      {session ? (
-        <>
-          <Header />
-          <Leaderboard />
-          <Footer />
-        </>
-      ): (
-        <>
-          <HeaderGuest />
-          <Leaderboard />
-          <Footer />
-        </>
-      )}
+        {session ? (
+          <>
+            <Header />
+            <Leaderboard />
+            <Footer />
+          </>
+        ): (
+          <>
+            <HeaderGuest />
+            <Leaderboard />
+            <Footer />
+          </>
+        )}
     </>
   );
 }

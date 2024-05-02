@@ -109,16 +109,16 @@ export default function Games() {
                 alt={ game.title }
                 className="w-full h-68 object-cover"
               />
-                <div className="flex items-center justify-between mt-1 p-2">
-                  <div className="flex items-center justify-center">
-                    <div className="w-3 h-3 rounded-full bg-green-500 mx-2"></div>
-                    <p className="text-sm text-gray-400">{ game.online } online</p>
-                  </div>
-                  <button className="px-4 py-2 w-2/3 bg-green-500 text-black font-bold rounded hover:bg-green-600 transition-colors duration-300">
-                    Play
-                  </button>
+              <div className="flex items-center justify-between mt-1 p-2">
+                <div className="flex items-center justify-center">
+                  <div className="w-3 h-3 rounded-full bg-green-500 mx-2"></div>
+                  <p className="text-sm text-gray-400">{ game.online } online</p>
                 </div>
+                <button className="px-4 py-2 w-2/3 bg-green-500 text-black font-bold rounded hover:bg-green-600 transition-colors duration-300">
+                  Play
+                </button>
               </div>
+            </div>
           ))}
         </div>
       </section>
