@@ -1,13 +1,13 @@
 import Link from 'next/link'
 import React from 'react'
-import diceImage from '../public/img/dice.png'
+import onlineGamingIMG from '../public/img/online-gaming.png'
 
 export default function Header() {
   return (
     <>
       <div className="flex flex-row h-20 bg-black text-white">
         <div className="flex flex-row w-screen place-items-center place-content-center mx-20">
-          <img src={ diceImage.src } alt='image' className="w-12 h-12"/>
+          <img src={ onlineGamingIMG.src } alt='image' className="w-12 h-12"/>
           <Link href='/' className="mr-5 font-bold place-items-baseline">GameDen</Link>
         </div>
 
