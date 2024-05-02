@@ -1,7 +1,7 @@
-import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth/[...nextauth]/route'
+import { getServerSession } from 'next-auth'
 import { connectMongoDB } from '../../db/mongodb'
-import User from '../../models/user'
+import UserModel from '../../models/user'
 
 export async function POST(req) {
   try {
@@ -15,7 +15,7 @@ export async function POST(req) {
 
     const { screenName, email, newEmail } = await req.json();
 
-    const updatedUser = await User.findOneAndUpdate(
+    const updatedUser = await UserModel.findOneAndUpdate(
       { email: email },
       { screenName: screenName, email: newEmail },
       { new: true }

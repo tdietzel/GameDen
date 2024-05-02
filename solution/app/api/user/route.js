@@ -32,7 +32,7 @@ export const GET = async (req) => {
     if (user.loses !== 0) {
       wl = user.wins / user.loses;
     } else {
-      wl = 0;
+      wl = user.wins;
     }
 
     const expToNextLevel = calculateExpToNextLevel(user.level);
