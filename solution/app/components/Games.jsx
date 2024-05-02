@@ -6,7 +6,7 @@ import unoIMG from '../public/img/unobkg.jpg'
 import unoMultiplayerIMG from '../public/img/unomultiplayerbkg.jpg'
 import { useState } from 'react'
 
-export default function SoloGames() {
+export default function Games() {
   const soloGames = [
     { id: 1, title: 'Blackjack', image: blackjackIMG, description: 'Card Game', online: 12 },
     { id: 2, title: 'Roulette', image: rouletteIMG, description: 'Color/Number Wheel', online: 8 },
