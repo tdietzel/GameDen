@@ -8,3 +8,19 @@
   border-radius: 50%;
   background-color: #4CAF50;
 }
+
+/* components/leaderboard */
+.bg-pattern {
+  background-image: radial-gradient(#374151 15%, transparent 15%),
+    radial-gradient(#374151 10%, transparent 10%);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+.text-shadow {
+  text-shadow:
+    -1px -1px 0 rgb(220, 15, 0),
+    1px -1px 0 rgb(171, 48, 32),
+    -1px 1px 0 rgb(146, 3, 1),
+    1px 1px 0 rgb(188, 70, 46);
+}
