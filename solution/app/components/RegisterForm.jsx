@@ -19,43 +19,49 @@ export default function RegisterForm() {
       return;
     }
 
-    try {
-      const userExists = await fetch('api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
+    if (screenName.length < 4) {
+      setError("Username must be at least 4 characters.");
+      return;
+    }
 
-      const { user } = await userExists.json();
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
 
-      if (user) {
-        setError("User already exists.");
-        return;
-      }
+    const userExists = await fetch('api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
 
-      const res = await fetch('api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          screenName,
-          email,
-          password,
-        }),
-      });
+    const { user: existingUser } = await userExists.json();
 
-      if (res.ok) {
-        const form = e.target;
-        form.reset();
-        router.push('/pages/login');
-      } else {
-        console.log("User registration failed.");
-      }
-    } catch (error) {
-      console.log("Error during registration: ", error);
+    if (existingUser) {
+      setError("User already exists.");
+      return;
+    }
+
+    const res = await fetch('api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        screenName,
+        email,
+        password,
+      }),
+    });
+
+    if (res.ok) {
+      const form = e.target;
+      form.reset();
+      router.push('/pages/login');
+    } else {
+      console.log("User registration failed.");
     }
   };
 
@@ -82,7 +88,7 @@ export default function RegisterForm() {
               </label>
               <input
                 onChange={(e) => setEmail(e.target.value)}
-                type='text'
+                type='email'
                 placeholder='Email'
                 autoComplete='username'
                 className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
