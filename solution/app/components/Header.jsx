@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import characterIMG from '../public/img/character.png'
 import coinIMG from '../public/img/dollar.png'
-import diceIMG from '../public/img/dice.png'
+import onlineGamingIMG from '../public/img/online-gaming.png'
 
 export default function Header() {
   const [showUserInfo, setShowUserInfo] = useState(false);
@@ -39,7 +39,7 @@ export default function Header() {
     <header className="bg-gray-900 text-white py-4 shadow-md">
       <div className="container mx-auto flex items-center justify-between px-6">
         <div className="flex items-center">
-          <Image src={ diceIMG } alt='logo' width={40} height={40} />
+          <Image src={ onlineGamingIMG } alt='logo' width={40} height={40} />
           <Link href='/' className="ml-2 text-2xl font-bold font-header">
             GameDen
           </Link>
