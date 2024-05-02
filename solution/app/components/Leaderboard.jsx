@@ -55,7 +55,7 @@ export default function Leaderboard() {
     } else if (sortBy === 'unoWins') {
       return <img src={ unoIMG.src } alt='Uno' className="h-10 w-10" />;
     } else {
-      return <img src={coinIMG.src} alt='Coin' className="h-10 w-10" />;
+      return <img src={ coinIMG.src } alt='Coin' className="h-10 w-10" />;
     }
   }
 
@@ -76,10 +76,13 @@ export default function Leaderboard() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        {/* Heading & Navigation */}
+      <div className="bg-gray-900 bg-pattern min-h-screen text-white">
         <div className="py-10 text-center">
-          <h1 className="text-4xl font-bold text-red-700">Leaderboards</h1>
+          <div className="bg-gray-900 py-8">
+            <h1 className="text-5xl font-bold text-white -ml-1 -mt-1 text-shadow">
+              Leaderboards
+            </h1>
+          </div>
           <div className="flex justify-center mt-4 space-x-4">
             <FilterLink onClick={() => handleFilterClick('maxCoins')}>Total Coins</FilterLink>
             <FilterLink onClick={() => handleFilterClick('wl')}>W/L Record</FilterLink>
