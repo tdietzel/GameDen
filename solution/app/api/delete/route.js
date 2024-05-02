@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server'
 import { connectMongoDB } from '../../db/mongodb'
+import { NextResponse } from 'next/server'
 import User from '../../models/user'
 
 export async function POST(req) {
@@ -26,9 +26,12 @@ export async function POST(req) {
 
     await User.findByIdAndDelete(user._id);
 
-    return NextResponse.redirect(`${redirectUrl}?message=User deleted successfully`, 302);
+    const baseUrl = req.nextUrl.origin;
+    const absoluteRedirectUrl = new URL(redirectUrl, baseUrl).toString();
+
+    return NextResponse.redirect(`${ absoluteRedirectUrl }?message=User deleted successfully`, 302);
   } catch (error) {
-    console.error('Error deleting user:', error);
+    console.error("Error deleting user:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
